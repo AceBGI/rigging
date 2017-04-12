@@ -62,7 +62,7 @@ class Control():
         
         singleAttributeLockList = []
         
-        for lockChannel in lockChannels:
+        for item in lockChannels:
             
             if item in ['t','r','s']:
                 
