@@ -30,15 +30,15 @@ class Control():
         
         # color control
         ctrlShape = mc.listRelatives(ctrlObject, s = 1)[0]
-        mc.setAttr(ctrlShape + 'ove', 1)
+        mc.setAttr(ctrlShape + '.ove', 1)
         
         # colors: 6 = blue, 13 = red, 22 = yellow
-        if prefix.startswith("l_"):
+        if prefix.startswith("l_") | prefix.startswith("L_") | prefix.startswith("left") | prefix.startswith("Left"): #blue
             mc.setAttr(ctrlShape + '.ovc', 6) # .ovc = override color
-        elif prefix.startswith("r_"):
+        elif prefix.startswith("r_") | prefix.startswith("R_") | prefix.startswith("right") | prefix.startswith("Right"): #red
             mc.setAttr(ctrlShape + '.ovc', 13)
         else:
-            mc.setAttr(ctrlShape + '.ovc', 22)
+            mc.setAttr(ctrlShape + '.ovc', 22) #yellow
         
         # translate control
         
