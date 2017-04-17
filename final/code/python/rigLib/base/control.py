@@ -9,7 +9,14 @@ class Control():
     """
     class for building rig control
     """
-    
+    """ paramaters:
+    pregix: string, prefix to name new objects
+    scale: float, scale value for size of control shapes
+    translateTo: string, reference object for control position
+    rotateTo: string, reference object for control orientation
+    parent: string, object to parent of new control
+    lockChannels: list<string>, list of channels on control to be locked and non-keyable
+    """
     def __init__(
                  self,
                  prefix = 'new',
