@@ -21,6 +21,12 @@
     <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="komodoRig\komodo.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="komodoRig\komodo_deform.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="komodoRig\__init__.py" />
     <Compile Include="rigLib\base\control.py" />
     <Compile Include="rigLib\base\module.py">
@@ -29,6 +35,12 @@
     <Compile Include="rigLib\base\__init__.py" />
     <Compile Include="rigLib\rig\__init__.py" />
     <Compile Include="rigLib\utils\joint.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="rigLib\utils\name.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="rigLib\utils\transform.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="rigLib\utils\__init__.py" />

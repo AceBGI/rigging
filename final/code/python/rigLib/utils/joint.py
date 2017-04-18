@@ -6,6 +6,9 @@ import maya.cmds as mc
 
 """
 lists joints hierarchy starting with top join
+topJoint: string, joint to get listed with its joint hierachy
+withEndJoint: bool, list heirarchy including end joints
+list: list<string>, listed joints starting with top joint
 """
 def listHierarchy(topJoint, withEndJoints = True):
     listedJoints = mc.listRelatives(topJoint, type = "joint", ad = True)
