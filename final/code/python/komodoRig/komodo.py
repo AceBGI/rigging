@@ -10,9 +10,11 @@ from rigLib.base import module
 sceneScale = 1.0
 
 #this path will have to change for each computer setup ***********************************
-mainProjectPath = 'C:/Users/u0584599/Source/Repos/rigging/final/assets'
+mainProjectPath = 'C:/Users/ace-b/Source/Repos/rigging/final/assets'
 modelFilePath = '%s/%s/model/%s_model.mb'
-builderSceneFilePath = '%s/%s/builder/%builder.mb'
+builderSceneFilePath = '%s/%s/builder/%s_builder.mb'
+
+rootJnt = 'root1_jnt'
 
 """
 main function to build character rig
@@ -28,5 +30,13 @@ def build(characterName):
     mc.file( modelFile, i = 1)
 
     # import builder scene
-    builderFile = builderSceneFilePath % (mainProjectPath, characterName, characterName)
+    builderFile = builderSceneFilePath % ( mainProjectPath, characterName, characterName )
     mc.file( builderFile, i = 1)
+
+    # parent model
+    modelGrp = '%s_model_grp' % characterName
+    mc.parent( modelGrp, baseRig.modelGrp )
+    
+    # parent skeleton
+    mc.parent( rootJnt, baseRig.jointsGrp )
+
