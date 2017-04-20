@@ -5,3 +5,5 @@ deformation setup
 
 import maya.cmds as mc
 
+def build():
+    
