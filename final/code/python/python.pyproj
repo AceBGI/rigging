@@ -27,6 +27,7 @@
     <Compile Include="komodoRig\komodo_deform.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="komodoRig\project.py" />
     <Compile Include="komodoRig\__init__.py" />
     <Compile Include="rigLib\base\control.py" />
     <Compile Include="rigLib\base\module.py">
