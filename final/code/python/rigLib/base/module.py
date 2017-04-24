@@ -23,6 +23,7 @@ class Base():
                  self,
                  characterName = 'new',
                  scale = 1.0,
+                 mainCtrlAttachObj = ''
                  ):
         
         self.topGrp = mc.group( n = characterName + '_rig_grp', em = 1 )
@@ -67,6 +68,46 @@ class Base():
         self.modulesGrp = mc.group( n = 'modules_grp', em = 1, p = global2Ctrl.C )
         self.partGrp = mc.group( n = 'parts_grp', em = 1, p = self.rigGrp )
         mc.setAttr(self.partGrp + '.it', l = 1)
+
+        # make main control
+        mainCtrl = control.Control( 
+                                     prefix = 'main',
+                                     scale = scale * 1,
+                                     parent = self.global2Ctrl.C,
+                                     translateTo = mainCtrlAttachObj,
+                                     lockChannels = ['t','r','s','v']
+                                     )
+        self._adjustMainCtrlShape(mainCtrl, scale)
+
+        if mc.objExists(mainCtrlAttachObj):
+            mc.parentConstraint(mainCtrlAttachObj, mainCtrl.off, mo = 1)
+        
+        mainVisAts = ['modelVis', 'jointsVis']
+        mainDispAts = ['modelDisp', 'jointsDisp']
+        mainObjList = [self.modelGrp, self.jointsGrp]
+        mainObjVisDvList = [1, 0]
+
+        # add rig visibility connections
+        for at, obj, dfVal in zip(mainVisAts, mainObjList, mainObjVisDvList):
+            mc.addAttr(mainCtrl.C, ln = at, at = 'enum', enumName = 'off:on', k = 1, dv = dfVal)
+            mc.setAttr(mainCtrl.C + '.' + at, cb = 1)
+            mc.connectAttr(mainCtrl.C + '.' + at, obj + '.v')
+
+        #add rig display type connections
+        for at, obj in zip(mainDispAts, mainObjList):
+            mc.addAttr(mainCtrl.C, ln = at, at = 'enum', enumName = 'normal:template:reference', k = 1, dv = 2)
+            mc.setAttr(mainCtrl.C + '.' + at, cb = 1)
+            mc.setAttr(obj + '.ove', 1)
+            mc.connectAttr(mainCtrl.C + '.' + at, obj + '.ovdt')
+    
+    # adjust shape of main control
+    def _adjustMainCtrlShape(self, ctrl, scale):
+        ctrlShapes = mc.listRelatives(ctrl.C, s = 1, type = 'nurbsCurve')
+        clust = mc.cluster(ctrlShapes)[1]
+        mc.setAttr(clust + '.ry', 90)
+        mc.delete(ctrlShapes, ch = 1)
+
+        mc.move(5 * scale, ctrl.off, moveY = True, relative = True)
 
     def _flatternGloabalCtrlShape(self, ctrlObject):
         ctrlShapes = mc.listRelatives(ctrlObject, s = 1, type = 'nurbsCurve')
