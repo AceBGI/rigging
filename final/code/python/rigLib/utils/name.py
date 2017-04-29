@@ -1,19 +1,27 @@
 """
-utilities to work with names and strings
+name @ utils
+
+Utilities to work with names and strings
 """
 
-
-"""
-removes suffix from given name in string
-return: string, name without suffix
-"""
-def removeSuffix(name):
-    edits = name.split('_')
-
-    # check if name doesnt have suffix
-    if len(edits) < 2:
+def removeSuffix( name ):
+    
+    """
+    Remove suffix from given name string
+    
+    @param name: given name string to process
+    @return: str, name without suffix
+    """
+    
+    edits = name.split( '_' )
+    
+    if len( edits ) < 2:
+        
         return name
-    suffix = '_' + edits[1]
-    nameNoSuffix = name[ : -len(suffix)]
-
+    
+    suffix = '_' + edits[-1]
+    nameNoSuffix = name[ :-len( suffix ) ]
+    
     return nameNoSuffix
+
+

@@ -34,6 +34,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="rigLib\base\__init__.py" />
+    <Compile Include="rigLib\rig\spine.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="rigLib\rig\__init__.py" />
     <Compile Include="rigLib\utils\joint.py">
       <SubType>Code</SubType>

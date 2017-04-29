@@ -1,24 +1,33 @@
 """
-Joint utils
+joint @ utils
+
+Various joint utility functions
 """
 
 import maya.cmds as mc
 
-"""
-lists joints hierarchy starting with top join
-topJoint: string, joint to get listed with its joint hierachy
-withEndJoint: bool, list heirarchy including end joints
-list: list<string>, listed joints starting with top joint
-"""
-def listHierarchy(topJoint, withEndJoints = True):
-    listedJoints = mc.listRelatives(topJoint, type = "joint", ad = True)
-    listedJoints.append(topJoint)
-    listedJoints.reverse() # reorder list to have topJoint at top
-
-    completeJoints = listedJoints[:] #make a copy of the listed Joints
+def listHierarchy( topJoint, withEndJoints = True ):
     
-    if withEndJoints == False:
-        completeJoints = [j for j in listedJoints if mc.listRelatives(j, c = 1, type = 'joint')]
-
+    """
+    list joint hierarchy starting with top joint
+    
+    @param topJoint: str, joint to get listed with its joint hierarchy
+    @param withEndJoints: bool, list hierarchy including end joints
+    @return: list( str ), listed joints starting with top joint
+    """
+    
+    listedJoints = mc.listRelatives( topJoint, type = 'joint', ad = True )
+    listedJoints.append( topJoint )
+    listedJoints.reverse()
+    
+    completeJoints = listedJoints[:]
+    
+    if not withEndJoints:
+        
+        completeJoints = [ j for j in listedJoints if mc.listRelatives( j, c = 1, type = 'joint' ) ]
+    
+    
     return completeJoints
-    
+
+
+

@@ -9,14 +9,7 @@ class Control():
     """
     class for building rig control
     """
-    """ paramaters:
-    pregix: string, prefix to name new objects
-    scale: float, scale value for size of control shapes
-    translateTo: string, reference object for control position
-    rotateTo: string, reference object for control orientation
-    parent: string, object to parent of new control
-    lockChannels: list<string>, list of channels on control to be locked and non-keyable
-    """
+    
     def __init__(
                  self,
                  prefix = 'new',
@@ -28,24 +21,61 @@ class Control():
                  lockChannels = ['s','v']
                  ):
         
+        """
+        @param prefix: str, prefix to name new objects
+        @param scale: float, scale value for size of control shapes
+        @param translateTo: str, reference object for control position
+        @param rotateTo: str, reference object for control orientation
+        @param parent: str, object to be parent of new control
+        @param shape: str, control shape type
+        @param lockChannels: list( str ), list of channels on control to be locked and non-keyable
+        @return: None
+        """
         
-   
+        ctrlObject = None
+        circleNormal = [1, 0, 0]
+        
+        if shape in ['circle', 'circleX']:
             
-        ctrlObject = mc.circle( n = prefix + '_ctl', ch = False, normal = [1, 0, 0], radius = scale )[0]
+            circleNormal = [1, 0, 0]
+        
+        elif shape == 'circleY':
+            
+            circleNormal = [0, 1, 0]
+        
+        elif shape == 'circleZ':
+            
+            circleNormal = [0, 0, 1]
+        
+        elif shape == 'sphere':
+            
+            ctrlObject = mc.circle( n = prefix + '_ctl', ch = False, normal = [1, 0, 0], radius = scale )[0]
+            addShape = mc.circle( n = prefix + '_ctl2', ch = False, normal = [0, 0, 1], radius = scale )[0]
+            mc.parent( mc.listRelatives( addShape, s = 1 ), ctrlObject, r = 1, s = 1 )
+            mc.delete( addShape )
+        
+        if not ctrlObject:
+            
+            ctrlObject = mc.circle( n = prefix + '_ctl', ch = False, normal = circleNormal, radius = scale )[0]
+            
         ctrlOffset = mc.group( n = prefix + 'Offset_grp', em = 1 )
         mc.parent( ctrlObject, ctrlOffset )
         
         # color control
-        ctrlShape = mc.listRelatives(ctrlObject, s = 1)[0]
-        mc.setAttr(ctrlShape + '.ove', 1)
+        ctrlShapes = mc.listRelatives( ctrlObject, s = 1 )
+        [ mc.setAttr( s + '.ove', 1 ) for s in ctrlShapes ]
         
-        # colors: 6 = blue, 13 = red, 22 = yellow
-        if prefix.startswith("l_") | prefix.startswith("L_") | prefix.startswith("left") | prefix.startswith("Left"): #blue
-            mc.setAttr(ctrlShape + '.ovc', 6) # .ovc = override color
-        elif prefix.startswith("r_") | prefix.startswith("R_") | prefix.startswith("right") | prefix.startswith("Right"): #red
-            mc.setAttr(ctrlShape + '.ovc', 13)
+        if prefix.startswith( 'l_' ):
+            
+            [ mc.setAttr( s + '.ovc', 6 ) for s in ctrlShapes ]
+        
+        elif prefix.startswith( 'r_' ):
+            
+            [mc.setAttr( s + '.ovc', 13 ) for s in ctrlShapes ]
+        
         else:
-            mc.setAttr(ctrlShape + '.ovc', 22) #yellow
+            
+            [mc.setAttr( s + '.ovc', 22 ) for s in ctrlShapes ]
         
         # translate control
         
@@ -69,18 +99,18 @@ class Control():
         
         singleAttributeLockList = []
         
-        for item in lockChannels:
+        for lockChannel in lockChannels:
             
-            if item in ['t','r','s']:
+            if lockChannel in ['t','r','s']:
                 
                 for axis in ['x','y','z']:
                     
-                    at = item + axis
+                    at = lockChannel + axis
                     singleAttributeLockList.append( at )
             
             else:
                 
-                singleAttributeLockList.append( item )
+                singleAttributeLockList.append( lockChannel )
         
         for at in singleAttributeLockList:
             
