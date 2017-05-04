@@ -1,5 +1,7 @@
 """
-module for making rig controls 
+By Alex Eakle
+control module for making rig controls
+
 """
 
 import maya.cmds as mc
@@ -20,17 +22,6 @@ class Control():
                  shape = 'circle',
                  lockChannels = ['s','v']
                  ):
-        
-        """
-        @param prefix: str, prefix to name new objects
-        @param scale: float, scale value for size of control shapes
-        @param translateTo: str, reference object for control position
-        @param rotateTo: str, reference object for control orientation
-        @param parent: str, object to be parent of new control
-        @param shape: str, control shape type
-        @param lockChannels: list( str ), list of channels on control to be locked and non-keyable
-        @return: None
-        """
         
         ctrlObject = None
         circleNormal = [1, 0, 0]

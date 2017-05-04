@@ -31,11 +31,13 @@ headJnt = 'head1_jnt'
 pelvisJnt = 'pelvis1_jnt'
 jawJnt = 'jaw1_jnt'
 
-def build( characterName ):
+def build( characterName, path ):
     
     """
     main function to build character rig
     """
+    project.mainProjectPath = path
+    mainProjectPath = project.mainProjectPath
     
     # new scene
     mc.file( new = True, f = True )

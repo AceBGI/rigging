@@ -22,12 +22,6 @@ class Base():
                  mainCtrlAttachObj = ''
                  ):
         
-        """
-        @param characterName: str, character name
-        @param scale: float, general scale of the rig
-        @return: None
-        """
-        
         self.topGrp = mc.group( n = characterName + '_rig_grp', em = 1 )
         self.rigGrp = mc.group( n = 'rig_grp', em = 1, p = self.topGrp )
         self.modelGrp = mc.group( n = 'model_grp', em = 1, p = self.topGrp )
@@ -150,12 +144,6 @@ class Module():
                  prefix = 'new',
                  baseObj = None
                  ):
-        
-        """
-        @param prefix: str, prefix to name new objects
-        @param baseObj: instance of base.module.Base class
-        @return: None
-        """
         
         self.topGrp = mc.group( n = prefix + 'Module_grp', em = 1 )
         
